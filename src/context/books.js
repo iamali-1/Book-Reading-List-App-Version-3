@@ -5,14 +5,14 @@ const BooksContext = createContext();
 function Provider ({children}){
     const [books, setBooks] = useState([]);
 
-    const fetchBooks = async () => {
+   const fetchBooks = useCallback(async () => {
       try {
         const response = await axios.get('http://localhost:3001/books');
         setBooks(response.data);
       } catch (error) {
         console.error('Error fetching books:', error);
       }
-    };
+    }, []);
     const editBookById = async (id, newTitle) => {
         const response =  await axios.put(`http://localhost:3001/books/${id}`, {
             title:newTitle
